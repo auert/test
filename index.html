@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>留言板</title>
+<script language="javascript" type="text/javascript" src="jquery-1.7.2.min.js"></script>
+
+<script>
+function insert()
+{
+ document.getElementById("hid").style.display = "block";
+ document.getElementById("hid1").style.display = "block";
+ document.getElementById("hid2").style.display = "block";
+ document.getElementById("hid3").style.display = "block";
+ document.getElementById("hid4").style.display = "block";
+ document.getElementById("hid5").style.display = "block";
+}
+                function Submit(){
+                $.ajax({
+                url: "insert.php",
+                data: $('#insert').serialize(),
+                type:"POST",
+                dataType:'',			
+              
+            });
+			
+        }
+function del(obj,id){
+	var str="id="+id;
+ var row=obj.parentElement.parentElement;
+                $.ajax({
+                url: "del.php",
+                data: str,
+                type:"POST",
+             
+            });
+            
+        }
+		
+function delall(){
+ var obj=document.getElementsByName("c1");
+        var len = obj.length;
+  var delId= document.getElementsByName("id");
+        
+     for (i = 0; i <= len; i++){
+            if (obj[i].checked == true)
+            {
+    var delMuti=delId[i].value;
+    alert(i+1);
+
+      
+
+    $.ajax({
+       type: "POST",
+      url: "del.php",
+      data:  {id : delMuti},				
+     });
+   tab.deleteRow(i+1);
+
+    
+            }
+        }
+        }
+</script>
+<style type="text/css">
+<style>
+textarea
+{
+width:100%;
+}
+.span1 {
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+.span2 {
+	padding-right: 20px;
+	margin-right: 1px;
+	margin-left: auto;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	position: relative;
+}
+.span4 {
+	margin-right: auto;
+}
+.spanb {
+	background-color: #6C9;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#btn {
+	margin-left: 175px;
+}
+</style>
+</style>
+</head>
+
+<body>
+
+<div class="span1" style="width: 780px;">
+<button href="#" onclick="insert()">新增留言</button>
+
+<button href="#"  onclick="sel()">全選留言</button>
+<button href="#" onclick="delall()">刪除留言</button>
+</div>
+
+<div  class="span1" id"read" style="width: 780px;">
+<table border="1">
+<tr>
+                <th width="50">&nbsp;</th>
+                <th width="50">#</th>
+                <th width="150">姓名</th>
+                <th width="280" >留言</th>
+                <th width="150">時間</th>
+                <th width="80">動作</th>
+    </tr>
+</table>
+</div>
+<div id="data" class="span1" style="width: 780px;">
+
+<script language="javascript" type="text/javascript">
+$("#data").load("read.php"); 
+</script> 
+
+</div>
+
+
+
+<div  class="span1" id="hid" style="display:none ;width: 780px;">
+<H2>留下訊息</H2>
+</div>
+
+<form action="" id="insert" method="post">
+<div class="span1" style="width: 780px;">
+
+<div id="hid1" class="span2"  style="display:none;width: 150px; float:left; text-align: right;">
+<label for="input01" >姓名</label>
+</div>
+
+<div class="span4" id="hid2"  style="display:none;width: 630px;">
+<input type="text" name="name" id="input01" style="width:300px;">
+</div>
+
+<P>
+
+<div class="span2" id="hid3" style="display:none;width: 150px; float:left; text-align: right;">
+  <label for="textarea" >留言內容</label>
+</div>
+
+<div class="span4" id="hid4" style="display:none;width: 630px;">
+<textarea rows="10"  name="message" id="textarea" style="width:300px;" ></textarea>
+</div>
+
+<P>
+</div>
+<div id="hid5" class="spanb" style="display:none; width: 780px; height:50px">
+
+<input id="btn" type="button"  value="新增留言" onClick="Submit()"/>
+<input type="reset" value="重新填寫" />
+</div>
+
+
+</form>
+
+</body>
+
+</html>
